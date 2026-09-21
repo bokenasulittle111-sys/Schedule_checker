@@ -27,8 +27,8 @@ const CURRICULUM = {
     { code: 'BUS101', name: '経営学入門', period: 4, day: 'wed', type: 'other' }
   ],
   '2_2': [
-    { code: 'ML201', name: '情報倫理(メ)', period: 1, day: 'mon', type: 'required' },
-    { code: 'MAT201', name: '共通基盤ワークショップ2B', periods: [3, 4], day: 'mon', type: 'required' }
+    { code: 'B31L09K2', name: '情報倫理(メ)', period: 1, day: 'mon', type: 'required' },
+    { code: 'B30B02A2', name: '共通基盤ワークショップ2B', periods: [3, 4], day: 'mon', type: 'required' }
   ],
   '3_1': [
     { code: 'ML301', name: '深層学習', period: 1, day: 'mon', type: 'required' },
