@@ -116,13 +116,16 @@ const ELECTIVE_REQUIRED_GROUPS = {
     grade: [1],
     semester: ["2"],
     maxSelect: 1,
-    period: 4,
     day: "thu",
     courses: [
-      { code: "B30G02E1", name: "英語総合発展(木4-1)", type: "elective-required" },
-      { code: "B30G02F1", name: "英語総合発展(木4-2)", type: "elective-required" },
-      { code: "B30G02G1", name: "英語総合発展(木4-3)", type: "elective-required" },
-      { code: "B30G02H1", name: "英語総合発展(木4-4)", type: "elective-required" }
+      { code: "B30G02E1", name: "英語総合発展(木4-1)", period: 4, type: "elective-required" },
+      { code: "B30G02F1", name: "英語総合発展(木4-2)", period: 4, type: "elective-required" },
+      { code: "B30G02G1", name: "英語総合発展(木4-3)", period: 4, type: "elective-required" },
+      { code: "B30G02H1", name: "英語総合発展(木4-4)", period: 4, type: "elective-required" },
+      { code: "B30G02A1", name: "英語総合発展(木3-1)", period: 3, type: "elective-required" },
+      { code: "B30G02B1", name: "英語総合発展(木3-2)", period: 3, type: "elective-required" },
+      { code: "B30G02C1", name: "英語総合発展(木3-3)", period: 3, type: "elective-required" },
+      { code: "B30G02D1", name: "英語総合発展(木3-4)", period: 3, type: "elective-required" }
     ]
   },
 
