@@ -13,8 +13,8 @@ const CURRICULUM = {
   ],
   '1_2': [
     { code: 'B31L07K1', name: 'プログラミング実習', periods: [1, 2], day: 'tue', type: 'required' },
-    { code: 'B31L05K1', name: 'データサイエンス入門2(メ)', period: 3, day: 'thu', type: 'required' },
-    { code: 'B31L06K1', name: 'データサイエンスのためのプログラミング基礎(メ)', period: 4, day: 'thu', type: 'required' },
+    { code: 'B31L05K1', name: 'データサイエンス入門2(メ)', period: 3, day: 'wed', type: 'required' },
+    { code: 'B31L06K1', name: 'データサイエンスのためのプログラミング基礎(メ)', period: 4, day: 'wed', type: 'required' },
     { code: 'B31M02A1', name: '情報学実習B', periods: [3, 4], day: 'fri', type: 'required' }
   ],
   '2_1': [
