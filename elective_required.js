@@ -92,6 +92,40 @@ const ELECTIVE_REQUIRED_GROUPS = {
     ]
   },
 
+  // 1年前期：英語総合基礎
+  group_9: {
+    name: "英語総合基礎",
+    description: "1つ選択してください",
+    grade: [1],
+    semester: ["1"],
+    maxSelect: 1,
+    period: 4,
+    day: "thu",
+    courses: [
+      { code: "B30G01D1", name: "英語総合基礎(木4-1)", type: "elective-required" },
+      { code: "B30G01F1", name: "英語総合基礎(木4-2)", type: "elective-required" },
+      { code: "B30G01G1", name: "英語総合基礎(木4-3)", type: "elective-required" },
+      { code: "B30G01H1", name: "英語総合基礎(木4-4)", type: "elective-required" }
+    ]
+  },
+
+  // 1年後期：英語総合発展
+  group_10: {
+    name: "英語総合発展",
+    description: "1つ選択してください",
+    grade: [1],
+    semester: ["2"],
+    maxSelect: 1,
+    period: 4,
+    day: "thu",
+    courses: [
+      { code: "B30G02E1", name: "英語総合発展(木4-1)", type: "elective-required" },
+      { code: "B30G02F1", name: "英語総合発展(木4-2)", type: "elective-required" },
+      { code: "B30G02G1", name: "英語総合発展(木4-3)", type: "elective-required" },
+      { code: "B30G02H1", name: "英語総合発展(木4-4)", type: "elective-required" }
+    ]
+  },
+
   // 2年前期：共通基盤ワークショップ２Ａ(月曜1-2コマ)
   workshop_2a: {
     name: "共通基盤ワークショップ２Ａ(月曜1-2コマ)",
@@ -137,7 +171,7 @@ const ELECTIVE_REQUIRED_GROUPS = {
       { code: "B31M04K2", name: "情報学課題解決実習2B(3-4コマ)", periods: [3, 4], day: "thu", type: "elective-required" },
       { code: "B31P05K2", name: "データベース(メ)", period: 1, day: "fri", type: "elective-required" },
       { code: "B31P07K2", name: "オペレーティングシステム実習(鈴木)", periods: [3, 4], day: "tue", type: "elective-required" },
-      { code: "B31P07L2", name: "オペレーティングシステム実習(浅野)", type: "elective-required" },
+      { code: "B31P07L2", name: "オペレーティングシステム実習(浅野)", periods: [3, 4], day: "tue", type: "elective-required" },
       { code: "B31Q16K2", name: "Webクライアントプログラミング(メ)", period: 5, day: "mon", type: "elective-required" }
     ]
   },
