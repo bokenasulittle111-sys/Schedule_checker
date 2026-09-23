@@ -572,6 +572,33 @@
       margin-bottom: 8px;
     }
 
+    .elective-filters {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      margin-bottom: 10px;
+    }
+
+    .elective-filters label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-text-light);
+    }
+
+    .elective-filters select {
+      padding: 6px 8px;
+      border: 1px solid var(--color-border);
+      border-radius: 6px;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+    }
+
     .elective-day-items {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -768,6 +795,35 @@
             <span class="elective-list-count" id="electiveListCount"></span>
           </div>
           <p class="elective-list-hint" id="electiveListHint"></p>
+          <div class="elective-filters">
+            <label>曜日
+              <select id="electiveFilterDay" onchange="renderElectiveList()">
+                <option value="">すべて</option>
+                <option value="mon">月</option>
+                <option value="tue">火</option>
+                <option value="wed">水</option>
+                <option value="thu">木</option>
+                <option value="fri">金</option>
+                <option value="sat">土</option>
+              </select>
+            </label>
+            <label>時限
+              <select id="electiveFilterPeriod" onchange="renderElectiveList()">
+                <option value="">すべて</option>
+                <option value="1">1限</option>
+                <option value="2">2限</option>
+                <option value="3">3限</option>
+                <option value="4">4限</option>
+                <option value="5">5限</option>
+              </select>
+            </label>
+            <label>分類
+              <select id="electiveFilterCategory" onchange="renderElectiveList()">
+                <option value="">すべて</option>
+              </select>
+            </label>
+            <button type="button" class="btn btn-secondary btn-sm" style="width: auto;" onclick="clearElectiveFilters()">条件をクリア</button>
+          </div>
           <div id="electiveList"></div>
         </div>
       </div>
@@ -1684,12 +1740,34 @@
       if (!list) return;
 
       const term = getCurrentTerm();
-      const electives = getAvailableCourses()
+      const all = getAvailableCourses()
         .filter(c => c.type === 'elective')
         .filter(c => !term || !c.terms || c.terms.includes(term))
         .sort((a, b) => DAY_ORDER.indexOf(a.day) - DAY_ORDER.indexOf(b.day) || a.periods[0] - b.periods[0] || a.name.localeCompare(b.name, 'ja'));
 
-      document.getElementById('electiveListCount').textContent = `${electives.length}件`;
+      // 分類の選択肢を作り直す（選択中の分類は保つ）
+      const categorySelect = document.getElementById('electiveFilterCategory');
+      const currentCategory = categorySelect.value;
+      const categories = [...new Set(all.map(c => c.category))].sort((a, b) => a.localeCompare(b, 'ja'));
+      categorySelect.innerHTML = '<option value="">すべて</option>';
+      categories.forEach(cat => {
+        const option = document.createElement('option');
+        option.value = cat;
+        option.textContent = `${cat}（${all.filter(c => c.category === cat).length}）`;
+        categorySelect.appendChild(option);
+      });
+      categorySelect.value = categories.includes(currentCategory) ? currentCategory : '';
+
+      const dayFilter = document.getElementById('electiveFilterDay').value;
+      const periodFilter = document.getElementById('electiveFilterPeriod').value;
+      const categoryFilter = categorySelect.value;
+      const electives = all.filter(c =>
+        (!dayFilter || c.day === dayFilter) &&
+        (!periodFilter || c.periods.includes(Number(periodFilter))) &&
+        (!categoryFilter || c.category === categoryFilter));
+
+      const filtered = electives.length !== all.length;
+      document.getElementById('electiveListCount').textContent = filtered ? `${electives.length}件 / 全${all.length}件` : `${all.length}件`;
       document.getElementById('electiveListHint').textContent =
         `${term ? `${termLabel(term)}・` : ''}時間割の空いているコマに入る選択授業です。クリックすると追加されます。`;
 
@@ -1737,9 +1815,18 @@
       if (electives.length === 0) {
         const empty = document.createElement('p');
         empty.style.cssText = 'margin: 8px 0; font-size: 14px; color: var(--color-text-light);';
-        empty.textContent = '追加できる選択授業はありません。';
+        empty.textContent = filtered || all.length > 0
+          ? '条件に合う選択授業はありません。'
+          : '追加できる選択授業はありません。';
         list.appendChild(empty);
       }
+    }
+
+    function clearElectiveFilters() {
+      document.getElementById('electiveFilterDay').value = '';
+      document.getElementById('electiveFilterPeriod').value = '';
+      document.getElementById('electiveFilterCategory').value = '';
+      renderElectiveList();
     }
 
     function openManualAddFromSlot() {
