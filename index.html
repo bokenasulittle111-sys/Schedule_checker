@@ -230,6 +230,17 @@
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
+    .syllabus-link {
+      color: var(--color-primary);
+      font-weight: 600;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .syllabus-link:hover {
+      text-decoration: underline;
+    }
+
     /* 科目詳細の授業コード（クリックでコピー） */
     .detail-code-copyable {
       cursor: pointer;
@@ -958,6 +969,12 @@
             <span id="detailCode" onclick="copyDetailCode()"></span><span class="copy-feedback" id="detailCodeFeedback"></span>
           </span>
         </div>
+        <div class="detail-item" id="detailSyllabusItem" style="display: none;">
+          <span class="detail-label">シラバス</span>
+          <span class="detail-value">
+            <a id="detailSyllabusLink" class="syllabus-link" href="#" target="_blank" rel="noopener noreferrer">シラバスを開く ↗</a>
+          </span>
+        </div>
         <div class="detail-item">
           <span class="detail-label">時限</span>
           <span class="detail-value">
@@ -1114,6 +1131,18 @@
       selectedClassType = type;
 
       document.getElementById('detailClassName').textContent = classElement.textContent;
+      // syllabus_data.js に url があればシラバスへのリンクを表示
+      const syllabusCourse = findSyllabusCourse(code, classElement.textContent);
+      const syllabusItem = document.getElementById('detailSyllabusItem');
+      const syllabusLink = document.getElementById('detailSyllabusLink');
+      if (syllabusCourse && syllabusCourse.url) {
+        syllabusLink.href = syllabusCourse.url;
+        syllabusLink.title = syllabusCourse.url;
+        syllabusItem.style.display = '';
+      } else {
+        syllabusItem.style.display = 'none';
+      }
+
       const detailCode = document.getElementById('detailCode');
       detailCode.textContent = code || '－';
       detailCode.classList.toggle('detail-code-copyable', !!code);
@@ -2021,6 +2050,13 @@
       localStorage.setItem('schedule', JSON.stringify(scheduleData));
       renderElectiveList();
       refreshCopiedMarks();
+    }
+
+    // 時間割の授業に対応する syllabus_data.js の科目を探す（授業コード＋科目名、なければ授業コードのみで一致）
+    function findSyllabusCourse(code, name) {
+      if (!code && !name) return null;
+      return SYLLABUS_COURSES.find(c => c.code === code && c.name === name)
+        || (code ? SYLLABUS_COURSES.find(c => c.code === code) : null);
     }
 
     // ---------- 授業コードのコピー ----------
