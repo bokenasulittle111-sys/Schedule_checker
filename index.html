@@ -549,6 +549,26 @@
       margin-top: 24px;
     }
 
+    /* 選択中の学年・学期（グリッドの上） */
+    .current-term {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--color-text-light);
+    }
+
+    .current-term .term-badge {
+      display: inline-block;
+      padding: 4px 14px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
     /* 選択可能な選択授業（グリッドの下） */
     .elective-list-card {
       margin-top: 20px;
@@ -715,6 +735,8 @@
 
     <div class="main-content">
       <div>
+        <div class="current-term" id="currentTermBar"></div>
+
         <div class="schedule-wrapper">
           <div class="schedule-grid" id="scheduleGrid">
             <!-- ヘッダー行 -->
@@ -1735,7 +1757,18 @@
     // ---------- 選択可能な選択授業の一覧（グリッドの下） ----------
     const DAY_ORDER = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
 
+    // グリッドの上に選択中の学年・学期を表示
+    function renderCurrentTerm() {
+      const bar = document.getElementById('currentTermBar');
+      if (!bar) return;
+      const term = getCurrentTerm();
+      bar.innerHTML = term
+        ? `<span class="term-badge">${termLabel(term)}</span><span>の時間割</span>`
+        : '<span>学年・学期が未選択です（「学年学期を選択」から設定できます）</span>';
+    }
+
     function renderElectiveList() {
+      renderCurrentTerm();
       const list = document.getElementById('electiveList');
       if (!list) return;
 
